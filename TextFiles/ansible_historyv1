@@ -1,0 +1,74 @@
+    1  sudo dnf install openssh-server -y
+    2  init 0
+    3  git 
+    4  su -
+    5  exit
+    6  history
+    7  exit
+    8  ssh-keygen -t ed25519 -C "ansible"
+    9  ssh-copy-id -i ~/.ssh/id_ed25519.pub root@192.168.45.10
+   10  ssh-copy-id -i ~/.ssh/id_ed25519.pub root@192.168.45.20
+   11  ssh-copy-id -i ~/.ssh/id_ed25519.pub root@192.168.45.30
+   12  ssh-copy-id -i ~/.ssh/id_ed25519.pub root@192.168.45.40
+   13  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   14  ssh-copy-id -i ~/.ssh/ansible.pub root@192.168.45.10
+   15  ssh-copy-id -i ~/.ssh/ansible.pub root@192.168.45.20
+   16  ssh-copy-id -i ~/.ssh/ansible.pub root@192.168.45.30
+   17  ssh-copy-id -i ~/.ssh/ansible.pub root@192.168.45.40
+   18  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   19  vim /etc/ansible/hosts 
+   20  sudo vim /etc/ansible/hosts 
+   21  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   22  sudo vim /etc/ansible/hosts 
+   23  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   24  ssh root@192.168.45.10
+   25  su -
+   26  ssh-copy-id -i ~/.ssh/id_ed25519.pub root@192.168.45.10
+   27  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   28  ansible all --key-file ~/.ssh/ansible -i inventory -m ping -u root --ask-pass
+   29  vim /etc/ansible/hosts 
+   30  sudo vim /etc/ansible/hosts 
+   31  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   32  ansible all --key-file ~/.ssh/ansible -i inventory -m ping -u cpt-jack-sparrow --ask-pass
+   33  su 
+   34  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   35  sudo ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   36  vi ~/.bashrc
+   37  source ~/.bashrc 
+   38  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   39  sudo ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   40  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   41  vi ~/.bashrc
+   42  source ~/.bashrc
+   43  ssa
+   44  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   45  rm ~/.ssh/*
+   46  ssh-keygen -t ed25519 -C "workstation"
+   47  ssh-keygen -t ed25519 -C "ansible"
+   48  ssh root@192.168.45.10 rm .ssh/*
+   49  ssh root@192.168.45.20 rm .ssh/*
+   50  ssh root@192.168.45.30 rm .ssh/*
+   51  ssh root@192.168.45.40 rm .ssh/*
+   52  ssh root@192.168.45.10 ls .ssh/
+   53  ssh root@192.168.45.10 ls -l .ssh/
+   54  history | grep ssh-copy
+   55  ssh-copy-id -i ~/.ssh/id_ed25519.pub root@192.168.45.10
+   56  ssh-copy-id -i ~/.ssh/id_ed25519.pub root@192.168.45.20
+   57  ssh-copy-id -i ~/.ssh/id_ed25519.pub root@192.168.45.30
+   58  ssh-copy-id -i ~/.ssh/id_ed25519.pub root@192.168.45.40
+   59  ssh-copy-id -i ~/.ssh/ansible.pub root@192.168.45.10
+   60  ssh-copy-id -i ~/.ssh/ansible.pub root@192.168.45.20
+   61  ssh-copy-id -i ~/.ssh/ansible.pub root@192.168.45.30
+   62  ssh-copy-id -i ~/.ssh/ansible.pub root@192.168.45.40
+   63  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   64  vi ~/.bashrc 
+   65  source ~/.bashrc 
+   66  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   67  vi ~/.bashrc 
+   68  source ~/.bashrc 
+   69  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   70  vi /etc/ansible/hosts 
+   71  sudo vi /etc/ansible/hosts 
+   72  ansible all --key-file ~/.ssh/ansible -i inventory -m ping
+   73  history
+   74  history > ansible_historyv1
