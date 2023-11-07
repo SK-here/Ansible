@@ -1,0 +1,6 @@
+############## Defining Nameless Play ###############
+- hosts: dev
+  tasks:  # Single Line Play
+    - yum: name=ftp state=present # Task - 1
+    - yum: name=httpd state=present # Task - 2
+    - service: name=httpd enabled=true state=started # Task - 3
