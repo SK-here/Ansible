@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# For Root
+ssh-copy-id -i ~/.ssh/ansible_key -f	root@node1  
+ssh-copy-id -i ~/.ssh/ansible_key -f	root@node2  
+ssh-copy-id -i ~/.ssh/ansible_key -f	root@node3  
+ssh-copy-id -i ~/.ssh/ansible_key -f	root@node4  
+ssh-copy-id -i ~/.ssh/ansible_key -f	root@node5  
+ssh-copy-id -i ~/.ssh/ansible_key -f	root@node6 
+ssh-copy-id -i ~/.ssh/ansible_key -f	root@node7  
+ssh-copy-id -i ~/.ssh/ansible_key -f	root@node8 
+                                      
+# For admin                           
+ssh-copy-id -i ~/.ssh/ansible_key -f	admin@node1  
+ssh-copy-id -i ~/.ssh/ansible_key -f	admin@node2  
+ssh-copy-id -i ~/.ssh/ansible_key -f	admin@node3  
+ssh-copy-id -i ~/.ssh/ansible_key -f	admin@node4  
+ssh-copy-id -i ~/.ssh/ansible_key -f	admin@node5  
+ssh-copy-id -i ~/.ssh/ansible_key -f	admin@node6  
+ssh-copy-id -i ~/.ssh/ansible_key -f	admin@node7  
+ssh-copy-id -i ~/.ssh/ansible_key -f	admin@node8  

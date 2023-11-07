@@ -1,0 +1,20 @@
+#!/bin/bash
+
+ssh node1 rm -rf ~/.ssh
+ssh node2 rm -rf ~/.ssh
+ssh node3 rm -rf ~/.ssh
+ssh node4 rm -rf ~/.ssh
+ssh node5 rm -rf ~/.ssh
+ssh node6 rm -rf ~/.ssh
+ssh node7 rm -rf ~/.ssh
+ssh node8 rm -rf ~/.ssh
+
+
+ssh root@node1 rm -rf ~/.ssh
+ssh root@node2 rm -rf ~/.ssh
+ssh root@node3 rm -rf ~/.ssh
+ssh root@node4 rm -rf ~/.ssh
+ssh root@node5 rm -rf ~/.ssh
+ssh root@node6 rm -rf ~/.ssh
+ssh root@node7 rm -rf ~/.ssh
+ssh root@node8 rm -rf ~/.ssh
