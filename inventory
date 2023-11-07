@@ -1,24 +1,20 @@
 # ini file
 #    
 ####### inventory heirarchy #########
+#  
+# @all:
+#  |--@ungrouped:
+#  |  |--192.168.45.10
+#  |--@prod:
+#  |  |--@dev:
+#  |  |  |--192.168.45.20
+#  |  |--@test:
+#  |  |  |--192.168.45.30
+#  |--@database:
+#  |  |--192.168.45.40
+#  |--@balancer:
+#  |  |--192.168.45.50
 #
-# ALL
-#  |-Individual Node
-#  |	
-#  |-Production:
-#  |	|----	Dev
-#  |	|	|----	node2
-#  |	|
-#  |  	|----	Testing
-#  |  		|----	node3
-#  |  
-#  |-Database:
-#  |  	|----	node4
-#  |
-#  |-Load-Balancer
-#    	|----	node5
-#
-
 
 # Individual node
 192.168.45.10 # node1
