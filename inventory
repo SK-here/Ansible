@@ -1,4 +1,45 @@
-192.168.45.10
-192.168.45.20
-192.168.45.30
-192.168.45.40
+# ini file
+#    
+####### inventory heirarchy #########
+#
+# ALL
+#  |-Individual Node
+#  |	
+#  |-Production:
+#  |	|----	Dev
+#  |	|	|----	node2
+#  |	|
+#  |  	|----	Testing
+#  |  		|----	node3
+#  |  
+#  |-Database:
+#  |  	|----	node4
+#  |
+#  |-Load-Balancer
+#    	|----	node5
+#
+
+
+# Individual node
+192.168.45.10 # node1
+
+# Developer Group
+[dev]
+192.168.45.20 # node2
+
+# Testing Group
+[test]
+192.168.45.30 # node3
+
+# Production Group (of group)
+[prod:children]
+dev
+test
+
+# Database
+[database]
+192.168.45.40 # node4
+
+# Load balancer
+[balancer]
+192.168.45.50 # node5
