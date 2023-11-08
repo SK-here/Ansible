@@ -1,0 +1,2 @@
+sudo dnf install ansible-navigator -y
+podman pull registry.redhat.io/ansible-automation-platform-22/ee-supported-rhel8:latest
