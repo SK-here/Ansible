@@ -1,4 +1,5 @@
-######### Multi Host - Single Plays ###########
+######### Multi Host - Single Play | Single Task ###########
+
 - name: Installing Mariadb & PHP
   hosts: dev              # Host - 1
   tasks:                  # Play - 1
