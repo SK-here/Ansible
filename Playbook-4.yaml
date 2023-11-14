@@ -1,4 +1,5 @@
 ############### Multi Host - Single Play ##############
+
 - name: Install Server Packages
   hosts: dev,test # host1,host2
   tasks: # Play
