@@ -1,4 +1,4 @@
-# Multiline Playbook
+# Multiline Play
 
 - name: Install FTP Server
   hosts: dev  # host-pattern
