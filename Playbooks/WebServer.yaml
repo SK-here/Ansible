@@ -1,0 +1,42 @@
+---
+
+- name: Provisioning a Web Server
+  hosts: web
+  become: true
+  tasks:
+    - name: Ensuring a server package is installed
+      yum:
+        name: "{{ pkg }}"
+        state: present
+
+    - name: Ensuring the service is enabled
+      systemd:
+        name: "{{ pkg }}"
+        state: started
+        enabled: true
+
+    - name: Ensuring the port is open
+      ansible.posix.firewalld:
+        service: http
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: Web Page Content
+      copy:
+        content: "This page is running a {{ pkg }}"
+        dest: "{{ docroot }}/index.html"
+
+    - name: Ensureing server responds with 200
+      uri:
+        url: http://{{ inventory_hostname }}
+        status_code: 200
+
+# - name: Verifying the Play
+#   hosts: localhost
+#   tasks:
+#     - uri:
+#         url: "http://{{ item }}"
+#         loop:
+#           - node3
+#           - node5
