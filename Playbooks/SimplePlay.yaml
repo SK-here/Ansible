@@ -1,0 +1,19 @@
+---
+- name: The Hello Play
+  hosts: web
+  become: false
+  tasks:
+    - name: Say Hello
+      debug:
+        msg: Hello, I am {{ inventory_hostname }} and my pkg is {{ pkg }}
+    - debug:
+        msg: "{{ ansible_user }}"
+
+- name: Hello from local controller
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Wassup
+      debug:
+        msg: Hola! wassup, I am {{ inventory_hostname }}
+...
