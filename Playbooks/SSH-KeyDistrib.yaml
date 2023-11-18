@@ -1,0 +1,27 @@
+# Create & Distribute keys across all managed nodes
+
+  # Creating ssh keys for controller node  (Management Node)
+
+- name: Creating SSH Key...
+  hosts: localhost
+  tasks:
+    - name: Creating ~/.ssh directory
+      file:
+        path: "{{ ssh_dir }}"
+        mode: 0700
+        state: directory
+    
+    - name: Generating Key pair
+      community.crypto.openssh_keypair:
+        path: "{{ ssh_dir }}/{{ ssh_key }}"
+        type: ed25519
+        comment: "Ansible SSH Key"
+
+- name: Distributing Keys...
+  hosts: all
+  tasks:
+    - name: Placing pub key to remote authorized_keys file
+      authorized_key:
+        user: "{{ ansible_user_id }}"
+        key:  "{{ lookup('file', '{{ ssh_dir }}/{{ ssh_key }}.pub') }}"
+        state: present
