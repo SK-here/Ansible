@@ -1,0 +1,32 @@
+############### Multi Host - Single Play ##############
+
+- name: Install Server Packages
+  hosts: dev,test # host1,host2
+  tasks: # Play
+    - name: Installing FTP               # Task - 1
+      yum: 
+        name: ftp 
+        state: present
+
+    - name: Installing Apache Httpd      # Task - 2
+      yum: 
+        name: httpd 
+        state: present
+
+    - name: Creating a Web Page          # Task - 3
+      copy:
+        content: "Hello!! Server"
+        dest: /var/www/html/index.html
+
+    - name: Starting & Enabling Services # Task - 4
+      service: 
+        name: httpd 
+        enabled: true 
+        state: started
+
+    - name: Adding Service to Firewall   # Task - 5
+      ansible.posix.firewalld:
+        service: http
+        permanent: true
+        state: enabled
+        immediate: yes
