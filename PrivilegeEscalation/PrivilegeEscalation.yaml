@@ -1,0 +1,44 @@
+# Escalate user privilege for ansible user
+
+  # Creating ssh keys for controller node    (Management Node)
+
+- name: Creating SSH Key...
+  hosts: localhost
+  tasks:
+    - name: Creating ~/.ssh directory
+      file:
+        path: "{{ ssh_dir }}"
+        mode: 0700
+        state: directory
+    
+    - name: Generating Key pair
+      community.crypto.openssh_keypair:
+        path: "{{ ssh_dir }}/{{ ssh_key }}"
+        type: ed25519
+        comment: "Ansible SSH Key"
+
+# Creating passwordless sudo user and Distributing ssh keys
+- name: Creating Passwordless Sudo User & Distributing SSH Keys...
+  hosts: all
+  become: true
+  tasks:
+    - name: Creating A Sudo User...
+      user:
+        name: admin
+        create_home: true
+      # Additional parameters for custom user
+      # uid: 1000
+      # group: 1000
+      # groups: wheel
+
+    - name: Confguring Passwordless Access...
+      copy:
+        content: "admin ALL=(ALL)  NOPASSWD: ALL"
+        dest: /etc/sudoers.d/admin
+        validate: /usr/sbin/visudo -csf %s
+
+    - name: Distribute SSH key to remote authorized_keys...
+      authorized_key:
+        user: admin 
+        key:  "{{ lookup('file', '{{ ssh_dir }}/{{ ssh_key }}.pub') }}"
+        state: present
