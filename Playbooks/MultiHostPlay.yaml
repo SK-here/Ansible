@@ -1,0 +1,24 @@
+############## Multi Host ###################
+
+- name: Installing Mariadb & PHP
+  hosts: dev              # Host - 1
+  tasks:                  # Play - 1
+    - yum:                # Task
+        name:
+          - php
+          - mariadb
+        state: present
+
+- name: Updating Packages
+  hosts: test             # Host - 2
+  tasks:                  # Play - 1
+    - yum:                # Task
+        name: '*'
+        state: latest
+
+- name: Installing RPM Development Tools
+  hosts: dev,prod         # Host 3
+  tasks:                  # Play - 1
+    - yum:                # Task
+        name: "@RPM Development Tools"
+        state: present
