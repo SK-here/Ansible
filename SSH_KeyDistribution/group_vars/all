@@ -1,0 +1,2 @@
+ssh_dir: "{{ lookup('env', 'HOME') }}/.ssh"
+ssh_key: ansible_key
