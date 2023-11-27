@@ -1,0 +1,23 @@
+$  ansible-galaxy collection install community.crypto
+$  ansible debian -m apt -a 'name=apache2 state=absent'
+$  ansible debian -m apt -a 'name=apache2 state=present'
+$  ansible all -m service -a 'name=apache2 enabled=true'
+$  ansible debian -a 'systemctl is-enabled apache2'
+$  ansible all -m ping
+$  ansible all -a 'echo "Hello!" > /root/hello.txt'
+$  ansible all -m shell -a 'echo "Hello!" > /root/hello.txt'
+$  ansible all -m command -a 'ls -l'
+$  ansible all -m command -a 'ls -l /root/'
+$  ansible all -m command -a 'cat /root/hello.txt'
+$  ansible all -m raw -a 'echo "Hello, again!" >> /root/hello.txt'
+$  ansible all -m raw -a 'cat /root/hello.txt'
+$  ansible all -m copy -a 'src=/etc/hosts dest=/etc/hosts'
+$  ansible all -m copy -a 'src=/etc/hosts dest=/etc/hosts' | less
+$  ansible all -m copy -a 'content="Hello:" dest=/root/hello.txt'
+$  ansible all -m copy -a 'content="\nHello again" dest=/root/hello.txt'
+$  ansible all -m copy -a 'content="EOF<<\nHello\n" dest=/root/hello.txt'
+$  ansible all -m copy -a 'content=EOF<<"\nHello\n" dest=/root/hello.txt'
+$  ansible all -m copy -a 'content="Hello" dest=/root/hello.txt'
+$  ansible all -m copy -a 'content="Hello" dest=/root/hello.txt insertafter=EOF'
+$  ansible all -a 'cat /root/hello.txt'
+$  ansible all -m copy -a 'content="Hello again" dest=/root/hello.txt insertafter=EOF'
