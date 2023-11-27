@@ -1,0 +1,81 @@
+- name: Few Experiments with Variables
+  hosts: localhost
+  gather_facts: false
+  
+#### Ansible Variables ###################################
+  
+  vars_files:
+    - ./custom_vars/myVars.yaml
+    - ./custom_vars/myVar1.yaml
+
+  vars:
+
+  # Simple variable
+    satellite: sputnik
+  
+  # Multiline Strings for a value (Using Pipe)
+    compass: |
+      north
+      east
+      south
+      west
+  
+  # To fill the new line with spaces
+    compliments: >
+      you
+      are
+      great
+
+  # A dictionary
+    outer_space:
+      pressure: low
+      radiation: high
+      is_cold: true
+      objects:
+        sun:
+          is_hot: true
+
+  # A comnibation of dict & list ( practical approach )
+    user_info:
+      - name: user1
+        shell: /usr/bin/bash
+      - name: user2
+        shell: /usr/bin/bash
+      - name: user3
+        shell: /usr/bin/bash
+      - name: user4
+        shell: /usr/bin/bash
+
+#--------------- Accessing the variables -----------------------------
+  tasks: 
+    - debug: 
+        msg: Hello World!
+    - debug: 
+        var: "{{ satellite }}" # direct access
+    - debug: 
+        msg: '{{ compliments }}' # calling var
+    - debug: 
+        var:  planets[4] # accessing list obj
+    - debug: 
+        var:  "{{ outer_space['radiation'] }}" # accessing dict obj
+    - debug: 
+        msg:  "{{ outer_space['objects']['sun']['is_hot'] }}" # calling nested dict obj
+    - debug:  
+        msg:  "{{ user_info[3]['name'] }}"
+    - debug: 
+        var: compass # direct access
+
+  # using dot (.) notation to access dict obj; 
+  # this method is prone to conflicts in some cases
+  # Even official ansible doc also not recommends this method to access the varibale
+    - debug: 
+        msg:  "{{ outer_space.objects.sun.is_hot }}"
+
+    - debug: 
+        msg: 'This is from myVars.yaml File: "{{ MyVar }}" ' # from ./myVars.yaml
+
+    - debug:
+        msg: "Apache has package name '{{ http_server_pkg }}' in debian based systems" # From ./host_vars/localhost.yaml
+
+    - debug: 
+        msg: " My name is {{ Name }} (From Group Vars)"  # from ./group_vars/all.yaml

@@ -1,0 +1,83 @@
+###################### Ansible Variables ###########################
+
+# ------------------- :Commont Variables: -------------------------
+ - int
+ - float
+ - path (/usr/sbin/man)
+ - bool (true/false)
+ - strings 
+
+Usage:
+
+ 'var: VarName' or  "{{ VarName }}" 
+
+# --------------------- :Lists: ----------------------------------
+
+Example:
+
+    ItemList
+        - obj1
+        - obj2
+        - obj3
+
+Usage:
+
+ 'var: ItemList[2]' or  "{{ ItemList[2] }}"
+
+# ------------------------ Multi-line vars -----------------------
+
+#------------------------ with pipe (newline character at the end of each line)
+    VarName: |
+        'this '
+        ' is '
+        ' it! '
+
+Output: This \n is \n it \n
+
+# ----------------------- with grater-than sign (>) (newline character at the end only)
+    VarName: |
+        'this '
+        ' is '
+        ' it! '
+
+Output: This is it \n
+
+# -------------------------- :Ditionary: --------------------------------------
+
+Example:
+    dictVar: 
+        key1: value1
+        key3: value3
+        key2: value3
+
+usage:      "var: dictVar['key3']" or "{{ dictVar['key3'] }}"
+Alternate:  "var: dictVar.key2"  or  "{{ dictVar.key2 }}"
+
+# --------------- Nested Dictionary
+ 
+ Example:
+    dictVar:
+       nestedVar:
+            key1: value1
+            key3: value3
+            key2: value3
+
+Usage:      "var: dictVar['nestedVar']['key3']" or "{{ dictVar['nestedVar']['key2'] }}"
+Alternate:  "var: dictVar.nedtedVar.key1" or "{{ dictVar.nestedVar.key1 }}"
+
+# --------------- Dict over List
+
+ Example:
+    listItem:
+        - dictItem1: SomeValue
+          key1: value1
+        
+        - dictItem2: SomeValue
+          key3: value3
+
+        - dictItem3: SomeValue
+          key4: value
+
+To Access:  "var: listItem[1]['dictItem2']" or "{{ listItem[2]['dictItem3'] }}"
+Alternate:  "{{ listItem.dictItem1 }}" and "{{ listItem.key1 }}"
+
