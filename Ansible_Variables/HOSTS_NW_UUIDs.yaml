@@ -1,0 +1,27 @@
+---
+- name: Fetch UUID of Network Connections for each Interface
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Fetching UUID for Interface enp0s3
+      shell: "nmcli --terse connectio show | awk -F: '/enp0s3$/ {print $2}'"
+      register: enp0s3_UUID
+
+    - name: Fetching UUID for Interface enp0s8
+      shell: "nmcli --terse connectio show | awk -F: '/enp0s8$/ {print $2}'"
+      register: enp0s8_UUID
+   
+    - name: Setting facts to store UUIDs
+      set_fact:
+        enp0s3: "{{ enp0s3_UUID['stdout'] }}"
+        enp0s8: "{{ enp0s8_UUID['stdout'] }}"
+
+    - name: Printing Results for Interface enp0s3 for all hosts
+      debug:
+        msg: "enp0s3: {{ enp0s3 }}"
+
+    - name: Printing Results for Interface enp0s8 for all hosts
+      debug:
+        msg: "enp0s8: {{ enp0s8 }}"
+
+...
