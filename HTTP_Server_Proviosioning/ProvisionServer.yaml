@@ -1,0 +1,62 @@
+---
+
+- name: Playbook to provision HTTPD Server 
+  hosts: black_pearl
+  vars_files:
+    ./server_vars.yaml
+  tasks:
+    - name: Installing Apache HTTPD Server
+      ansible.builtin.dnf:
+        name: 
+          - httpd
+          - firewalld
+        state: present
+
+    - name: Enabling Firewalld
+      ansible.builtin.service:
+        name: firewalld
+        enabled: yes
+        state: started
+        
+    - name: Adding http service to firewall
+      ansible.posix.firewalld:
+        service: http
+        permanent: true
+        state: enabled
+
+    - name: Adding port to firewall
+      ansible.posix.firewalld:
+        port: 80/tcp
+        permanent: true
+        state: enabled
+
+    - name: Creating a Symbolic Link
+      ansible.builtin.file:
+        src: /var/www/html
+        dest: /webserver
+        state: link
+        setype: "{{ http_context }}"
+      
+    - name: Coping index.html to /webserver
+      ansible.builtin.copy:
+        src: webdata/index.html
+        dest: /webserver
+        setype: "{{ http_context }}"
+
+    - name: Enabling httpd
+      ansible.builtin.service:
+        name: httpd
+        enabled: yes
+        state: started
+
+    - name: Restart httpd
+      ansible.builtin.service:
+        name: httpd
+        enabled: yes
+        state: restarted
+
+    - name: Enabling Firewalld
+      ansible.builtin.service:
+        name: firewalld
+        enabled: yes
+        state: restarted
