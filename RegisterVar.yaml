@@ -1,0 +1,14 @@
+---
+- name: Using Register Variable
+  hosts: black_pearl
+  tasks:  
+    - name: Installing HTTPD server
+      yum:  
+        name: httpd
+        state: installed
+        
+      register: install_results
+    
+
+    - debug:
+        var: install_results
