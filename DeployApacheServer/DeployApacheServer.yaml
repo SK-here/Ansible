@@ -1,0 +1,55 @@
+---
+- name: Deploying Apache HTTP Server
+  hosts: dauntless
+  vars_files:
+    - ServerVars.yaml
+  tasks:
+
+    - name: Installing required packages
+      yum:  
+        name: 
+          - "{{ firewall_pkg }}"
+          - "{{ python_pkg }}"
+          - "{{ web_pkg }}"
+        state: latest
+
+    - name: Enabling Firewall
+      service:  
+        name: "{{ firewall_service }}"
+        enabled: true
+        state: started
+   
+    - name: Ensuring Content
+      copy:
+        src: ./index.html
+        dest: /var/www/html/index.html
+
+    - name: Enabling Apache Service
+      service:  
+        name: "{{ web_service }}"
+        enabled: true
+        state: started
+       
+    - name: Allowing Acess through Firewall
+      firewalld:
+        service: "{{ httpd_rule }}"
+        permanent: true
+        immediate: true
+        state: enabled
+
+    - shell:  
+        cmd: systemctl restart "{{ firewall_service }}".service
+        
+    - shell:  
+        cmd: systemctl restart "{{ web_service }}".service
+
+    - name: Querying again...
+      uri:  
+        url: "{{ url }}"
+        status_code: 200
+      register: result
+      ignore_errors: true
+
+#--------------------- Debugging 
+    - debug:
+        var: result
