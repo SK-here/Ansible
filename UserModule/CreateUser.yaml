@@ -1,0 +1,17 @@
+---
+- name: Creating User Accounts with Password Authentication
+  hosts: black_pearl
+  gather_facts: false
+  tasks:
+    - name: Creating User
+      ansible.builtin.user:
+        name: ansible
+        password: "{{ user_password | password_hash('sha512','salt') }}"
+        shell: /bin/bash
+        create_home: true
+        groups: "{{ admin_group }}"
+      
+      register: results
+
+    - debug:
+        var: results
