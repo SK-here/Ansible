@@ -1,6 +1,45 @@
-authorized_keys
-ssh_module
-User Module
-copy
-fetch
-ssh-keygen
+shell        --+
+command        |-- Commands Execution methods
+raw          --+
+lineinfile   --+
+blockinfile    |
+copy           |-- Configuration Files
+script         |
+template     --+
+mount        --+
+open_iscsi     |
+parted         |
+lvg            |
+lvol           |
+pvcreate       |
+pvremove       |-- Block Storage Mgmgt
+vgcreate       |
+vgremove       |
+lvcreate       |
+lvremove       |
+filesystem   --+
+yum/dnf      --+
+pip            |
+package        |-- Package Management
+gem            |
+alternatives --+  
+group        --+
+user           |-- User & Group Mgmgt
+hostname     --+
+nmcli        --+
+firewalld      |
+systemd        |
+service        |
+sysctl         |-- Post Installation Config
+chrony         |
+yum_repository |
+ssh-keygen     |
+timezone     --+
+at           --|
+crontab      --+-> Schedulers
+file         --+
+fetch          |-- File Handling
+unarchive    --+
+get_url
+wait_for
+wait_for_connection
