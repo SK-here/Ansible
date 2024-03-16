@@ -1,2 +1,6 @@
 authorized_keys
 ssh_module
+User Module
+copy
+fetch
+ssh-keygen
