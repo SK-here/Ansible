@@ -1,0 +1,35 @@
+---
+- name: Generating SSH Key for Local System
+  hosts: localhost
+  connection: local
+  vars:
+    ssh_dir: "{{ lookup ('env','HOME') }}/.ssh"
+    ssh_key: ansible_test
+  tasks:
+    - name: Creating ~/.ssh directory
+      ansible.builtin.file:
+        path: "{{ ssh_dir }}"
+        mode: 0700
+        state: directory
+
+    - name: Generating SSH Keypair
+      community.crypto.openssh_keypair:
+        path: "{{ ssh_dir }}/{{ ssh_key }}"
+        type: ed25519
+        size: 4096
+        state: present
+#       force: yes
+        passphrase: 123
+
+- name: Key Distribution
+  hosts: all
+  vars:
+    ssh_dir: "{{ lookup ('env','HOME') }}/.ssh"
+    ssh_key: ansible_test
+  tasks:
+    - name: Sharing SSH Key
+      ansible.builtin.authorized_key:
+        user: "{{ ansible_user_id }}" # using ansible_fact for to dynamically target ansible user only
+        key: "{{ lookup('file', '{{ ssh_dir }}/{{ ssh_key }}.pub') }}"
+        state: present
+
