@@ -1,0 +1,8 @@
+shell
+command
+raw
+copy
+firewalld
+services
+yum_repository
+crontab
