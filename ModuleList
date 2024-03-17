@@ -26,14 +26,15 @@ alternatives --+
 group        --+
 user           |-- User & Group Mgmgt
 hostname     --+
-nmcli        --+
-firewalld      |
-systemd        |
-service        |
-sysctl         |-- Post Installation Config
-chrony         |
-yum_repository |
-ssh-keygen     |
+nmcli          --+
+firewalld        |
+systemd          |
+service          |
+sysctl           |-- Post Installation Config
+chrony           |
+yum_repository   |
+ssh-keygen       |
+opessh_keypair --+
 timezone     --+
 at           --|
 crontab      --+-> Schedulers
