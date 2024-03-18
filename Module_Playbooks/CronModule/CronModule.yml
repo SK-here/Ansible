@@ -1,0 +1,12 @@
+---
+- hosts: test
+  tasks:
+    - name: scheduling a job
+      ansible.builtin.cron:
+        name: "log entry"
+        minute: "0"
+        hour: "0"
+        weekday: "*"
+        user: admin
+        state: present
+        job: /home/admin/bin/clear_buffer
