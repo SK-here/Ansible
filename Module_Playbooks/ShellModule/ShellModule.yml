@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+    - name: Useing shell Module
+      ansible.builtin.shell: echo "Hello" >> /root/Hello.word
+    
+    - name: Subscription Manager Register
+      ansible.builtin.shell:
+        cmd: subscription-manager register --username "trivedisaksham@gmail.com" --password "@py1jhb0spR#"
