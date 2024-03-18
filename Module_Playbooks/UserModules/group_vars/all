@@ -1,0 +1,23 @@
+username: ansible_user
+user_password: ansible
+
+
+user_details:
+    - name: user1
+      passwd: user1
+
+    - name: user2
+      passwd: user2
+
+    - name: user3
+      passwd: user3
+
+    - name: user4
+      passwd: user4
+
+usr_details:
+    - username: user5
+      password: user5
+
+    - username: user6
+      password: user6

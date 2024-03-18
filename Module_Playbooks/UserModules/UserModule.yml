@@ -1,0 +1,27 @@
+---
+- hosts: all
+  tasks:
+    - name: Creating user
+      ansible.builtin.user:
+        name: "{{ username }}"
+        comment: Ansible User
+        uid: 1005
+        groups: wheel
+        group: admin
+        shell: /bin/bash
+        state: present
+        password: "{{ user_password | password_hash('sha512') }}"
+
+
+    - name: Creating Multiple Users Using Loop
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        password: "{{ item.passwd | password_hash('sha512') }}"
+      loop: "{{ user_details }}"
+
+
+    - name: Creating Multiple Users Without loop 
+      ansible.builtin.user:
+        name: "{{ item.username }}"
+        password: "{{ item.password | password_hash('sha512') }}"
+      with_items: "{{ usr_details }}"
