@@ -8,7 +8,6 @@ yum_repository
 crontab
 yum/dnf
 service
-firewalld
 get_url
 yum_repository
 cron
