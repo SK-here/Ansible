@@ -1,6 +1,9 @@
 ---
 - name: Creating Storage Partition and lvm
   hosts: test
+  vars:
+    vg_name: test_vg
+    lv_name: test
 
 # Ensuring a block partition must be present 
   pre_tasks:
@@ -16,7 +19,7 @@
   tasks:
     - name: Creating Volume Group 
       community.general.lvg:
-        vg: test_vg
+        vg: "{{ vg_name }}"
         pvs: /dev/sdb1
       # pesize: 16
         state: present
@@ -25,31 +28,46 @@
               # active
       # reset_vg_uuid: true/false
 
-# Creating LVM
+    # Creating LVM
     - name: Creating LVM 
       community.general.lvol:
-        vg: test_vg
-        lv: test
+        vg: "{{ vg_name }}"
+        lv: "{{ lv_name }}"
         size: +100%FREE
         pvs: /dev/sdb1
 
-# verifying the Volume Gorup and Logical Volume  
+# Formatting the partition and Mounting the storage  
   post_tasks:
-        
-# Varifying Volume Group 
-    - name: verifying volume group
-      ansible.builtin.command: vgdisplay
-      register: vg_result
+    
+    # Formatting a XFS filesystem 
+    - name: Create a XFS filesystem of /dev/sdb1
+      community.general.filesystem:
+        fstype: xfs
+        dev: "/dev/{{ vg_name }}/{{ lv_name }}"
+        state: present
+              # absent
+    #   uuid: generate
 
-    - ansible.builtin.debug:
-        msg: "{{ vg_result }}"
+    # mounting a volume
+    - name: mounting a filesystem
+      ansible.posix.mount:
+        path: "/tmp/"
+        src: "/dev/{{ vg_name }}/{{ lv_name }}"
+        fstype: xfs
+        state: present
+              # present - volume will be mounted + /etc/fstab will be present
+              # absent  - volume + /etc/fstab entry will be removed
+              # mounted - volume will be mounted but not persistent across reboot
+              # remounted - volume will be remounted
+        opts: defaults
+             # exec
+        dump: 0
+        passno: 0
 
-# varifying LVM group
-    - name: verifying lvm
-      ansible.builtin.command: lvdisplay
-      register: lvm_result
-
-    - ansible.builtin.debug:
-        msg: "{{ lvm_result }}"
+    - ansible.posix.mount:
+        path: "/tmp/"
+        src: "/dev/{{ vg_name }}/{{ lv_name }}"
+        fstype: xfs
+        state: mounted
 
 ...
