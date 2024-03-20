@@ -1,0 +1,55 @@
+---
+- name: Creating Storage Partition and lvm
+  hosts: test
+
+# Ensuring a block partition must be present 
+  pre_tasks:
+    - name: Creating block storage
+      ansible.builtin.parted:
+        device: /dev/sdb
+        number: 1
+        state: present
+        part_end: 1GiB
+        flags: [lvm ]
+
+# Creating a volume group and lvm
+  tasks:
+    - name: Creating Volume Group 
+      community.general.lvg:
+        vg: test_vg
+        pvs: /dev/sdb1
+      # pesize: 16
+        state: present
+              # absent
+              # inactive
+              # active
+      # reset_vg_uuid: true/false
+
+# Creating LVM
+    - name: Creating LVM 
+      community.general.lvol:
+        vg: test_vg
+        lv: test
+        size: +100%FREE
+        pvs: /dev/sdb1
+
+# verifying the Volume Gorup and Logical Volume  
+  post_tasks:
+        
+# Varifying Volume Group 
+    - name: verifying volume group
+      ansible.builtin.command: vgdisplay
+      register: vg_result
+
+    - ansible.builtin.debug:
+        msg: "{{ vg_result }}"
+
+# varifying LVM group
+    - name: verifying lvm
+      ansible.builtin.command: lvdisplay
+      register: lvm_result
+
+    - ansible.builtin.debug:
+        msg: "{{ lvm_result }}"
+
+...
