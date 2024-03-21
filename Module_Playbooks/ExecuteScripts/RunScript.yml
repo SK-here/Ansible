@@ -1,0 +1,7 @@
+---
+- hosts: all
+  tasks:
+    - name: Run The Script
+      ansible.builtin.script: "{{ script_dir }}/{{ my_script }}"
+      args:
+        executable: bash

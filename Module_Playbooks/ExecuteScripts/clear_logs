@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# stops the logging service 
+systemctl stop --force rsyslog
+
+# Find all .log files in /var/log and its subdirectories
+log_files=$(find /var/log -type f -name "*.log")
+
+# Iterate over each log file and truncate it
+for log_file in $log_files; do
+    sudo truncate -s 0 "$log_file"
+done
+
+
+# againg starts the logging service
+systemctl start --now rsyslog
