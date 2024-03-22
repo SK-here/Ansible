@@ -1,0 +1,4 @@
+my_script: systeminfo
+script_dir: scripts
+hwreport_dir: hwreport
+hwreport_file : $(date +\%d-\%m-\%Y)

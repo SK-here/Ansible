@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# To Display Hostname
+echo "HOSTNAME: $(hostname)"
+echo ""
+
+# To Show Uptime
+echo "Server Uptime is: $(uptime -p)  $(uptime)"
+echo ""
+
+# To Display memory Utilization
+free -h
+echo ""
+
+# To Show Storage Information
+echo "Storage Information for the server is is given below"
+df -Th
+echo ""
+
+# Displays top 5 processes with high memory utilization
+#ps -eo pcpu,pid,user,args | sort -k 2 -r | head -5
+#echo ""

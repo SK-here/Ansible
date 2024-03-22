@@ -1,0 +1,49 @@
+---
+- name: Fetching Hardware Status for Inventory Servers
+  hosts: all
+  
+  pre_tasks:
+    
+    - name: Ensuring Directory Path
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/{{ hwreport_dir }}"
+        state: directory
+        mode: '0755'
+
+  tasks: 
+
+    - shell: date +%d-%m-%Y
+      register: hw_report_file
+
+    - debug: 
+        msg: "{{ ansible_user_dir }}/{{ hwreport_dir }}/{{ ansible_hostname }}-{{ hw_report_file.stdout }}.log"
+
+    - name: Running script
+      ansible.builtin.script: "{{ script_dir }}/{{ my_script }} > {{ ansible_user_dir }}/{{ hwreport_dir }}/{{ ansible_hostname }}-{{ hw_report_file.stdout }}.log"
+      args:
+        executable: bash
+      notify: fetch log file
+
+  handlers:
+
+    - name: fetch log file
+      ansible.builtin.fetch:
+        src: "{{ ansible_user_dir }}/{{ hwreport_dir }}/{{ ansible_hostname }}-{{ hw_report_file.stdout }}.log"
+        dest: 'servers_logs/hosts_logs/{{ ansible_hostname }}/' 
+        flat: yes
+
+  post_tasks:
+    - name: removing uncessary files
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/{{ hwreport_dir }}/"
+        state: absent
+
+- hosts: localhost
+  connection: local
+  tasks:
+    
+    - shell: date +%d-%m-%Y
+      register: hw_report_file
+    
+    - shell: cat servers_logs/*/*/*.log > "servers_logs/{{ hw_report_file.stdout }}.log"
+...
