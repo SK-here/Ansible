@@ -1,0 +1,41 @@
+---
+- name: Creating a new /etc/hosts file
+  hosts: all
+  tasks:
+
+    - name: Removing /etc/hosts file
+      ansible.builtin.file:
+        path: /etc/hosts
+        state: absent
+    
+    - name: Ensuring File Exists
+      ansible.builtin.file:
+        path: /etc/hosts
+        state: touch
+        mode: '0644'
+        owner: root
+        group: root
+
+    - name: Add a block of lines to the /etc/hosts file
+      ansible.builtin.blockinfile:
+        path: /etc/hosts
+        block: |
+          # Custom hosts end
+          127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+          ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+          
+          172.25.250.11   node1.lab.net node1
+          172.25.250.12   node2.lab.net node2
+          172.25.250.13   node3.lab.net node3
+          172.25.250.14   node3.lab.net node4
+          172.25.250.15   node3.lab.net node5
+          172.25.250.16   node3.lab.net node6
+          # Custom hosts end
+        state: present
+    
+    - name: Add a line to the /etc/hosts file
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        line: '172.25.250.5   workstation.lab.net   node1'
+        state: present
+...
