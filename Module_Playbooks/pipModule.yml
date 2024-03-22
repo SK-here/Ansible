@@ -1,0 +1,14 @@
+---
+- hosts: dev
+  tasks:
+
+    - name: Ensuring pip3 is installed
+      ansible.builtin.dnf:
+        name: python3-pip
+        state: present
+
+    - ansible.builtin.pip:
+        name: numpy, pandas # scikit-learn
+        extra_args: --user
+        executable: pip3
+  #     virtualenv: /path/to/my_app/venv
