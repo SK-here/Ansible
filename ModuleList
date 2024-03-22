@@ -1,46 +1,45 @@
-shell        --+
-command        |-- Commands Execution methods
-raw          --+
-lineinfile   --+
-blockinfile    |
-copy           |-- Configuration Files
-script         |
-template     --+
-mount        --+
-open_iscsi     |
-parted         |
-lvg            |
-lvol           |
-pvcreate       |
-pvremove       |-- Block Storage Mgmgt
-vgcreate       |
-vgremove       |
-lvcreate       |
-lvremove       |
-filesystem   --+
-yum/dnf      --+
-pip            |
-package        |-- Package Management
-gem            |
-alternatives --+  
-group        --+
-user           |-- User & Group Mgmgt
-hostname     --+
-nmcli          --+
-firewalld        |
-systemd          |
-service          |
-sysctl           |-- Post Installation Config
-chrony           |
-yum_repository   |
-ssh-keygen       |
-opessh_keypair --+
-timezone     --+
-at           --|
-crontab      --+-> Schedulers
-file         --+
-fetch          |-- File Handling
-unarchive    --+
-get_url
-wait_for
-wait_for_connection
++-----------------------------+-----------------------+
+|   Modules                                           |
++-----------------------------+-----------------------+
+|   ansible.builtin.shell                             |        
+|   ansible.builtin.command                           |            
+|   ansible.builtin.raw                               |    
+|   ansible.builtin.lineinfile                        |  
+|   ansible.builtin.blockinfile                       |         
+|   ansible.builtin.copy                              |       
+|   ansible.builtin.script                            |         
+|   ansible.builtin.template                          |        
+|   ansible.builtin.at                                |      
+|   ansible.builtin.cron                              |       
+|   ansible.builtin.file                              |    
+|   ansible.builtin.fetch                             |     
+|   ansible.builtin.yum/dnf                           |       
+|   ansible.builtin.pip                               |       
+|   ansible.builtin.package                           |   
+|   ansible.builtin.group                             |     
+|   ansible.builtin.user                              |   
+|   ansible.builtin.hostname                          |   
+|   ansible.builtin.systemd                           |  
+|   ansible.builtin.service                           |     
+|   ansible.builtin.sysctl                            |               
+|   ansible.builtin.yum_repository                    |     
+|   ansible.builtin.unarchive                         |       
+|   ansible.builtin.get_url                           |
+|   ansible.builtin.wait_for                          | 
+|   ansible.builtin.wait_for_connection               | 
++-----------------------------------------------------+
+|   community.general.parted                          | 
+|   community.general.lvg                             |      
+|   community.general.lvol                            |       
+|   community.general.filesystem                      |          
+|   community.general.nmcli                           |           
+|   community.general.gem                             |        
+|   community.general.alternatives                    |          
+|   community.general.timezone                        |          
+|   community.general.opessh_keypair                  |         
+|   community.general.authorized_key                  |       
+|   community.general.open_iscsi                      |        
++-----------------------------------------------------+
+|   ansible.posix.firewalld                           |       
+|   ansible.posix.mount                               |     
++-----------------------------------------------------+

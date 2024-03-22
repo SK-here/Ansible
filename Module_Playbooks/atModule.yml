@@ -1,0 +1,29 @@
+---
+- hosts: test
+ # Ensuring that te package to run at command is installed  
+  pre_tasks:
+    - ansible.builtin.dnf:
+        name: at
+        state: latest
+
+  tasks:
+
+    # Schedule a job at every 5 min at the count of 5
+    - name: Schedule a command to execute in  minutes as root
+      ansible.posix.at:
+        command: echo "Hello"  > /root/hello.word
+        count: 5
+        units: minutes
+
+    - name: Match a command to an existing job and delete the job
+      ansible.posix.at:
+        command: echo "Hello"  > /root/hello.word
+        state: absent
+
+    - name: Schedule a command to execute in 5 minutes making sure it is unique in the queue
+      ansible.posix.at:
+        command: echo "Hello"  > /root/hello.word
+        count: 5
+        units: minutes
+        unique: true
+...

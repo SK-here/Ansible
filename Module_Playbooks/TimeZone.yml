@@ -1,0 +1,7 @@
+--- 
+- name: TimeZone Module
+  hosts: test
+  tasks:
+    
+    - community.general.timezone:
+        name: Asia/Kolkata
