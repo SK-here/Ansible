@@ -1,0 +1,27 @@
+--- 
+- name: Configuring user Command logs 
+  hosts: all
+  tasks:
+    - name: Configuring Log File Entry
+      ansible.builtin.copy:
+        src: ./bashrc
+        dest: /etc/bashrc
+
+    - name: Setting up loggin with a new file
+      ansible.builtin.copy:
+        content: "local6.*    /var/log/commands.log"
+        dest: /etc/rsyslog.d/bash.conf
+
+    - name: restarting the service
+      ansible.builtin.service:
+        name: rsyslog
+        state: restarted
+
+    - ansible.builtin.shell: 'source /etc/bashrc'
+
+    - ansible.builtin.shell: 'source ~/.bashrc'
+        
+
+    - name: Testing The Configuration 
+      ansible.builtin.command: 'cat /var/log/command.log'
+    
