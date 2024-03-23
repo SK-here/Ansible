@@ -1,0 +1,35 @@
+---
+- name: Downloading Tomcat and verifying it's status
+  hosts: webservers
+  vars:
+ #  tomcat_checksum: 'sha512:38f636039d00c66ff8f7347dfedcc1eef85b7ce25cf98dcc9192df07f85d4f6aec447922e0f934c1ab7d099ec484b2060aad4de496d5ca14637ac435cb55b7c0'
+    tomcat_url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.99/bin/apache-tomcat-8.5.99.tar.gz 
+  tasks:
+    - name: Ensuring tomcat group
+      ansible.builtin.group:
+        name: tomcat
+        state: present
+
+    - name: Ensuring tomcat user
+      ansible.builtin.user:
+        name: tomcat
+        group: tomcat
+        state: present
+        system: true
+
+    - name: Ensuring Directory to exist
+      ansible.builtin.file:
+        path: /tmp/tomcat
+        state: directory
+        mode: '0755'
+        group: tomcat
+        owner: tomcat
+
+    - name: Ensuring tomcat file
+      ansible.builtin.get_url:
+        url: "{{ tomcat_url }}"
+        dest: /tmp/tomcat/
+        mode: '0755'
+        group: tomcat
+        owner: tomcat
+        checksum: sha512:38f636039d00c66ff8f7347dfedcc1eef85b7ce25cf98dcc9192df07f85d4f6aec447922e0f934c1ab7d099ec484b2060aad4de496d5ca14637ac435cb55b7c0
