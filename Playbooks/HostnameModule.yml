@@ -1,0 +1,39 @@
+---
+- hosts: all
+  tasks:
+    - name: set hostname to node1
+      ansible.builtin.hostname:
+        name: node1.lab.net
+        use: systemd
+      when: ansible_hostname in "node1" 
+
+    - name: set hostname to node2
+      ansible.builtin.hostname:
+        name: node2.lab.net
+        use: systemd
+      when: ansible_hostname  in "node2" 
+    
+    - name: set hostname to node3
+      ansible.builtin.hostname:
+        name: node3.lab.net
+        use: systemd
+      when: ansible_hostname  in "node3" 
+    
+    - name: set hostname to node4
+      ansible.builtin.hostname:
+        name: node4.lab.net
+        use: systemd
+      when: ansible_hostname  in "node4" 
+    
+    - name: set hostname to node5
+      ansible.builtin.hostname:
+        name: node5.lab.net
+        use: systemd
+      when: ansible_hostname  in "node5" 
+    
+    - name: set hostname to node6
+      ansible.builtin.hostname:
+        name: node6.lab.net
+        use: systemd
+      when: ansible_hostname  in "node6" 
+    
