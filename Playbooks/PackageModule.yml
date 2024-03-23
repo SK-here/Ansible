@@ -1,0 +1,7 @@
+---
+- hosts: test
+  tasks:
+    - name: Installing HTTPD using Package Module
+      ansible.builtin.package:
+        name: httpd
+        state: present
