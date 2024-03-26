@@ -1,0 +1,16 @@
+- name: Select the second IP address from ansible_all_ipv4_addresses
+  hosts: all
+
+  pre_tasks: 
+
+    - name: ensuring hosts file to be absent; to create a new one from scratch 
+      ansible.builtin.file:
+        path: /etc/hosts
+        state: absent
+
+  tasks:
+
+    - name: building new /etc/hosts file using Jinja2 template
+      ansible.builtin.template:
+        src: ./hosts.j2
+        dest: /etc/hosts
