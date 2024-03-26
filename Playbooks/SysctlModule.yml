@@ -1,0 +1,33 @@
+---
+- name: Manage sysctl settings
+  hosts: dev
+  become: true
+  tasks:
+
+    # sysctl module is used to set the vm.swappiness kernel parameter to 10. This parameter 
+    # controls the tendency of the kernel to swap out process memory used by Linux. A lower
+    # value means the kernel will try to avoid swapping as much as possible.
+
+    - name: Set vm.swappiness to 10
+      sysctl:
+        name: vm.swappiness
+        value: 10
+        state: present
+
+    # sysctl module is used to set the net.ipv4.ip_forward kernel parameter to 1. This parameter 
+    # determines whether the Linux kernel forwards packets between network interfaces.
+
+    - name: Set net.ipv4.ip_forward to 1
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: 1
+        state: present
+
+    # sysctl module is used to set the net.ipv6.conf.all.disable_ipv6 kernel parameter to 1. 
+    # This parameter disables IPv6 on all network interfaces.
+
+    - name: Disable IPv6
+      sysctl:
+        name: net.ipv6.conf.all.disable_ipv6
+        value: 1
+        state: present
