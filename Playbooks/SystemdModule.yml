@@ -1,0 +1,52 @@
+---
+- name: configuring systemctl service
+  hosts: dev
+
+  pre_tasks:
+
+    - name: Ensuring HTTPD is installed
+      ansible.builtin.package:
+        name: httpd
+        state: present
+
+  tasks:
+
+    - name: Managing HTTPD
+      ansible.builtin.systemd:
+        name: httpd
+        state: started
+        enabled: true
+
+
+    - name: handling Crond
+      ansible.builtin.systemd:
+        name: crond
+        state: restarted
+        daemon_reload: true
+
+    - name: Restart httpd
+      ansible.builtin.systemd:
+        name: firewalld
+        state: restarted
+            #   reloaded
+            #   started
+            #   stopped
+        masked: no
+
+    - name: Forced systemd to reload/re-read the config
+      ansible.builtin.systemd:
+        daemon_reload: true
+    
+    - name: Forced systemd to re-exec itself
+      ansible.builtin.systemd:
+        daemon_reexec: true
+    
+#   - name: run a user service when XDG_RUNTIME_DIR is not set on remote login
+#     ansible.builtin.systemd:
+#       name: firewalld
+#       state: started
+#       scope: user
+#           #   system
+#           #   global
+#     environment:
+#       XDG_RUNTIME_DIR: "/run/user/{{ myuid }}"
