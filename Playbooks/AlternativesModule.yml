@@ -1,0 +1,17 @@
+---
+- hosts: dev
+  pre_tasks:
+    - name: Installing python3
+      ansible.builtin.dnf:
+        name:
+          - python36
+          - python3-pip
+        state: present
+  tasks:
+
+    - name: Install Python 3.6 and set it as the currently selected alternative
+      community.general.alternatives:
+        name: python
+        path: /usr/bin/python3
+        link: /usr/bin/python
+        state: selected
