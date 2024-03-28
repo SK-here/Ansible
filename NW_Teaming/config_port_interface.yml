@@ -1,0 +1,11 @@
+---
+- name: Configuring Team Interface
+  community.general.nmcli:
+    conn_name: "{{ item.connection }}"
+    ifname: "{{ item.interface }}"
+    type: team-slave
+    master: team0
+    state: present
+  loop:
+    - { connection: team0-port1, interface: enp0s9 }
+    - { connection: team0-port2, interface : enp0s10 }

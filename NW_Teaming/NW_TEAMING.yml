@@ -1,0 +1,64 @@
+---
+- hosts: test
+  pre_tasks:
+    - name: Resolving Dependencies
+      ansible.builtin.package:
+        name:
+        - NetworkManager-libnm
+        - nm-connection-editor
+        - policycoreutils-python-utils
+  
+  tasks:
+    - block:
+        - name: Configuring Teaming for node3
+          community.general.nmcli:
+            conn_name: team0
+            type: team
+            ifname: team0
+            ip4: '172.27.0.11/24'
+            gw4: '172.27.0.1'
+            method4: manual
+            runner: "activebackup"
+            state: present
+
+     #  - include_tasks: config_port_interface.yml
+
+        - name: Configuring Team Interface
+          community.general.nmcli:
+            conn_name: "{{ item.connection }}"
+            ifname: "{{ item.interface }}"
+            type: team-slave
+            master: team0
+            state: present
+          loop:
+            - { connection: team0-port1 , interface: enp0s9 }
+            - { connection: team0-port2 , interface : enp0s10 }
+
+      when: ansible_hostname in "node3"  
+
+    - block:
+        - name: Configuring Teaming for node6
+          community.general.nmcli:
+            conn_name: team0
+            type: team
+            ifname: team0
+            ip4: '172.27.0.12/24'
+            gw4: '172.27.0.1'
+            method4: manual
+            runner: "activebackup"
+            state: present
+
+     #  - include_tasks: config_port_interface.yml
+
+        - name: Configuring Team Interface
+          community.general.nmcli:
+            conn_name: "{{ item.connection }}"
+            ifname: "{{ item.interface }}"
+            type: team-slave
+            master: team0
+            state: present
+          loop:
+            - { connection: team0-port1, interface: enp0s9 }
+            - { connection: team0-port2, interface : enp0s10 }
+
+      when: ansible_hostname in "node6"  
